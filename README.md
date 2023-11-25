@@ -2,7 +2,7 @@
  
  多项式分数矩阵类
 
-使用 $IntelliJ-IDEA$ 打开项目。
+使用 $IntelliJ-IDEA$ 打开项目 $matrix$。
 
 使用 $java-17$。
 
