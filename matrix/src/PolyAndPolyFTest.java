@@ -1,4 +1,4 @@
-public class Main2 {
+public class PolyAndPolyFTest {
     public static void main(String[] args) {
         test2();
         System.out.println();

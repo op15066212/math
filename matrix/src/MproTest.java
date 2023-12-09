@@ -1,4 +1,4 @@
-public class Main3 {
+public class MproTest {
     public static void main(String[] args) {
         //从低次项到高项
         Mpro m1 = new Mpro(new Poly[][]{
