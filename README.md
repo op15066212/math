@@ -2,7 +2,7 @@
  
  多项式分数矩阵类
 
-使用 IntelliJ-IDEA 打开项目 matrix_java，java版本：java-17。
+使用 IntelliJ-IDEA 打开项目 matrix_java，java版本：java-17
 
 使用 PyCharm 打开项目 matrix_python，python版本：3.10.11
 
