@@ -4,7 +4,7 @@
 
 使用 IntelliJ-IDEA 打开项目 matrix_java，java版本：java-17。
 
-使用 PyCharm Professional 打开项目 matrix_python，python版本：3.10.13
+使用 PyCharm 打开项目 matrix_python，python版本：3.10.13
 
 我先创建了分数类 class F，包括加减乘除，化简-使用 gcd 函数。
 
