@@ -2,7 +2,11 @@ from F import Fraction
 
 
 class Complex:
-    def __init__(self, real=Fraction(), imag=Fraction()):
+    def __init__(self, real=None, imag=None):
+        if real is None:
+            real = Fraction()
+        if imag is None:
+            imag = Fraction()
         if isinstance(real, int):
             real = Fraction(real)
         if isinstance(imag, int):
@@ -11,19 +15,19 @@ class Complex:
         self.imag = imag
 
     # 加法运算符重载
-    def __add__(self, other):
+    def __add__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return Complex(self.real + other.real, self.imag + other.imag)
 
     # 减法运算符重载
-    def __sub__(self, other):
+    def __sub__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return Complex(self.real - other.real, self.imag - other.imag)
 
     # 乘法运算符重载
-    def __mul__(self, other):
+    def __mul__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return Complex(self.real * other.real - self.imag * other.imag,
@@ -41,38 +45,38 @@ class Complex:
         return res
 
     # 除法运算符重载
-    def __floordiv__(self, other):
+    def __floordiv__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         denominator = other.real * other.real + other.imag * other.imag
         return Complex((self.real * other.real + self.imag * other.imag) // denominator,
                        (self.imag * other.real - self.real * other.imag) // denominator)
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         temp = self + other
         return temp
 
-    def __isub__(self, other):
+    def __isub__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         temp = self - other
         return temp
 
-    def __imul__(self, other):
+    def __imul__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         temp = self * other
         return temp
 
-    def __ifloordiv__(self, other):
+    def __ifloordiv__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         temp = self // other
         return temp
 
-    def __eq__(self, other):
+    def __eq__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return self.real == other.real and self.imag == other.imag
@@ -83,25 +87,25 @@ class Complex:
         return (a * a + b * b) ** 0.5
 
     # <
-    def __lt__(self, other):
+    def __lt__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return self.length() < other.length()
 
     # >
-    def __gt__(self, other):
+    def __gt__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return other < self
 
     # >=
-    def __ge__(self, other):
+    def __ge__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return not self < other
 
     # <=
-    def __le__(self, other):
+    def __le__(self, other: any):
         if not isinstance(other, Complex):
             other = Complex(other)
         return not other < self

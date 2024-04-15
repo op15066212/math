@@ -42,7 +42,7 @@ class Mpro:
             # 如果不是元组，那么就是设置整行的值
             self.data[key] = value
 
-    def __add__(self, B):
+    def __add__(self, B: any):
         if not isinstance(B, Mpro):
             B = Mpro(B)
         A = Mpro(self.data)
@@ -56,7 +56,7 @@ class Mpro:
                 C[i][j] = A[i][j] + B[i][j]
         return C
 
-    def __sub__(self, B):
+    def __sub__(self, B: any):
         if not isinstance(B, Mpro):
             B = Mpro(B)
         A = Mpro(self.data)
@@ -70,7 +70,7 @@ class Mpro:
                 C[i][j] = A[i][j] - B[i][j]
         return C
 
-    def __mul__(self, B):
+    def __mul__(self, B: any):
         if not isinstance(B, Mpro):
             B = Mpro(B)
         A = Mpro(self.data)
@@ -88,19 +88,19 @@ class Mpro:
                 C[i][j] = sum
         return C
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: any):
         if not isinstance(other, Mpro):
-            B = Mpro(other)
+            other = Mpro(other)
         return self + other
 
-    def __isub__(self, other):
+    def __isub__(self, other: any):
         if not isinstance(other, Mpro):
-            B = Mpro(other)
+            other = Mpro(other)
         return self - other
 
-    def __imul__(self, other):
+    def __imul__(self, other: any):
         if not isinstance(other, Mpro):
-            B = Mpro(other)
+            other = Mpro(other)
         return self * other
 
     def __pow__(self, power, modulo=None):

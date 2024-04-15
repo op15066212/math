@@ -37,7 +37,7 @@ class Poly:
             res = res * x + self[i]
         return res
 
-    def __add__(self, other):
+    def __add__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         n = max(len(self.cof), len(other.cof))
@@ -48,7 +48,7 @@ class Poly:
             res[i] = a + b
         return Poly(res)
 
-    def __sub__(self, other):
+    def __sub__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         n = max(len(self.cof), len(other.cof))
@@ -59,7 +59,7 @@ class Poly:
             res[i] = a - b
         return Poly(res)
 
-    def __mul__(self, other):
+    def __mul__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         n = len(self.cof) + len(other.cof) - 1
@@ -69,31 +69,31 @@ class Poly:
                 res[i + j] += self[i] * other[j]
         return Poly(res)
 
-    def __imul__(self, other):
+    def __imul__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         temp = self * other
         return temp
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         temp = self + other
         return temp
 
-    def __isub__(self, other):
+    def __isub__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         temp = self - other
         return temp
 
-    def __ifloordiv__(self, other):
+    def __ifloordiv__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         temp = self // other
         return temp
 
-    def __imod__(self, other):
+    def __imod__(self, other: any):
         if not isinstance(other, Poly):
             other = Poly(other)
         temp = self % other
@@ -110,7 +110,7 @@ class Poly:
             n //= 2
         return res
 
-    def __floordiv__(self, other):
+    def __floordiv__(self, other: any):
         m = self.degree()
         n = other.degree()
         if m < n:
@@ -124,7 +124,7 @@ class Poly:
                 remainder[i + j] -= q * other[j]
         return Poly(quotient)
 
-    def __mod__(self, other):
+    def __mod__(self, other: any):
         m = self.degree()
         n = other.degree()
         if m < n:

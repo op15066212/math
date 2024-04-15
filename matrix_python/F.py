@@ -34,7 +34,7 @@ class Fraction:
             self.x = -self.x
             self.y = -self.y
 
-    def __add__(self, rhs):
+    def __add__(self, rhs: any):
         if not isinstance(rhs, Fraction):
             rhs = Fraction(rhs)
         nx = (self.x * rhs.y) + \
@@ -44,7 +44,7 @@ class Fraction:
 
         return res
 
-    def __sub__(self, rhs):
+    def __sub__(self, rhs: any):
         if not isinstance(rhs, Fraction):
             rhs = Fraction(rhs)
         nx = (self.x * rhs.y) - \
@@ -54,7 +54,7 @@ class Fraction:
 
         return res
 
-    def __mul__(self, rhs):
+    def __mul__(self, rhs: any):
         if not isinstance(rhs, Fraction):
             rhs = Fraction(rhs)
         nx = self.x * rhs.x
@@ -73,7 +73,7 @@ class Fraction:
             n //= 2
         return res
 
-    def __floordiv__(self, rhs):
+    def __floordiv__(self, rhs: any):
         if not isinstance(rhs, Fraction):
             rhs = Fraction(rhs)
         nx = self.x * rhs.y
@@ -81,25 +81,25 @@ class Fraction:
         res = Fraction(nx, ny)
         return res
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         temp = self + other
         return temp
 
-    def __isub__(self, other):
+    def __isub__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         temp = self - other
         return temp
 
-    def __imul__(self, other):
+    def __imul__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         temp = self * other
         return temp
 
-    def __ifloordiv__(self, other):
+    def __ifloordiv__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         temp = self // other
@@ -109,31 +109,31 @@ class Fraction:
         return self.x / self.y
 
     # =
-    def __eq__(self, other):
+    def __eq__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         return self.x == other.x and self.y == other.y
 
     # <
-    def __lt__(self, other):
+    def __lt__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         return self.length() < other.length()
 
     # >
-    def __gt__(self, other):
+    def __gt__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         return other < self
 
     # >=
-    def __ge__(self, other):
+    def __ge__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         return not self < other
 
     # <=
-    def __le__(self, other):
+    def __le__(self, other: any):
         if not isinstance(other, Fraction):
             other = Fraction(other)
         return not other < self
@@ -154,3 +154,8 @@ if __name__ == "__main__":
     print((a * b))
     print((a // b))
     print(a ** 5)
+    a = Fraction(7, 20) + 2
+    b = Fraction(3, 4) + 4
+    c = Fraction(1, 2) + 4
+    d = Fraction(20, 100) + Fraction(1, 3)
+    print(a // (b - c * d))

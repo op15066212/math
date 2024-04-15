@@ -217,7 +217,7 @@ def inv3_zeta1mulc(n: int):
                 a[i][j] = Complex(i + 1)
             if j % 2 == 1:
                 a[i][j] = -a[i][j]
-    b = [[Fraction()] for _ in range(n)]
+    b = [[Complex()] for _ in range(n)]
     for i in range(n):
         b[i][0] = unlimited2(powmul(i + 1))
     m = M(a)

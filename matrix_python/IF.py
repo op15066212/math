@@ -2,11 +2,15 @@ from F import Fraction
 
 
 class IF:
-    def __init__(self, f=Fraction(), p=Fraction()):
+    def __init__(self, f=None, p=None):
+        if f is None:
+            f = Fraction()
+        if p is None:
+            p = 0
         if not isinstance(f, Fraction):
             f = Fraction(f)
-        if not isinstance(p, Fraction):
-            p = Fraction()
+        if not isinstance(p, int):
+            p = int(p)
         self.f = f
         self.p = p
         self.clear()
@@ -16,20 +20,20 @@ class IF:
         self.p += i
         self.f = Fraction(self.f.x - self.f.y * i, self.f.y)
 
-    def __add__(self, other):
+    def __add__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
-        return IF(self.p + other.p, self.f + other.f)
+        return IF(self.f + other.f, self.p + other.p)
 
-    def __sub__(self, other):
+    def __sub__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
-        return IF(self.p - other.p, self.f - other.f)
+        return IF(self.f - other.f, self.p - other.p)
 
-    def __mul__(self, other):
+    def __mul__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
-        return IF(self.p * other.p, self.f * other.f)
+        return IF(self.ToF() * other.ToF())
 
     def __pow__(self, power, modulo=None):
         n = power
@@ -42,37 +46,37 @@ class IF:
             n //= 2
         return res
 
-    def __floordiv__(self, other):
+    def __floordiv__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
-        return IF(self.p // other.p, self.f // other.f)
+        return IF(self.ToF() // other.ToF())
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         temp = self + other
         return temp
 
-    def __isub__(self, other):
+    def __isub__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         temp = self - other
         return temp
 
-    def __imul__(self, other):
+    def __imul__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         temp = self * other
         return temp
 
-    def __ifloordiv__(self, other):
+    def __ifloordiv__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         temp = self // other
         return temp
 
     def ToF(self):
-        return Fraction(Fraction(self.p) + self.f)
+        return self.f + self.p
 
     def inverse(self):
         q = self.ToF()
@@ -82,31 +86,31 @@ class IF:
     def length(self):
         return self.ToF().length()
 
-    def __eq__(self, other):
+    def __eq__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         return self.f == other.f and self.p == other.p
 
     # <
-    def __lt__(self, other):
+    def __lt__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         return self.length() < other.length()
 
     # >
-    def __gt__(self, other):
+    def __gt__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         return other < self
 
     # >=
-    def __ge__(self, other):
+    def __ge__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         return not self < other
 
     # <=
-    def __le__(self, other):
+    def __le__(self, other: any):
         if not isinstance(other, IF):
             other = IF(other)
         return not other < self
@@ -167,3 +171,8 @@ if __name__ == "__main__":
     print(a ** 2)
     print(a.LoopStructure1())
     print(a.LoopStructure2())
+    a = IF(Fraction(7, 20), 2)
+    b = IF(Fraction(3, 4), 4)
+    c = IF(Fraction(1, 2), 4)
+    d = IF(Fraction(20, 100)) + IF(Fraction(1, 3))
+    print(a // (b - c * d))

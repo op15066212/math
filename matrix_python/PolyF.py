@@ -9,7 +9,11 @@ def gcd(a, b):
 
 
 class PolyF:
-    def __init__(self, x=Poly(0), y=Poly(1)):
+    def __init__(self, x=None, y=None):
+        if x is None:
+            x = Poly(0)
+        if y is None:
+            y = Poly(1)
         if not isinstance(x, Poly):
             x = Poly(x)
         if not isinstance(y, Poly):
@@ -40,7 +44,7 @@ class PolyF:
             self.x = -self.x
             self.y = -self.y
 
-    def __add__(self, rhs):
+    def __add__(self, rhs: any):
         if not isinstance(rhs, PolyF):
             rhs = PolyF(rhs)
         nx = (self.x * rhs.y) + \
@@ -50,7 +54,7 @@ class PolyF:
 
         return res
 
-    def __sub__(self, rhs):
+    def __sub__(self, rhs: any):
         if not isinstance(rhs, PolyF):
             rhs = PolyF(rhs)
         nx = (self.x * rhs.y) - \
@@ -60,7 +64,7 @@ class PolyF:
 
         return res
 
-    def __mul__(self, rhs):
+    def __mul__(self, rhs: any):
         if not isinstance(rhs, PolyF):
             rhs = PolyF(rhs)
         nx = self.x * rhs.x
@@ -79,7 +83,7 @@ class PolyF:
             n //= 2
         return res
 
-    def __floordiv__(self, rhs):
+    def __floordiv__(self, rhs: any):
         if not isinstance(rhs, PolyF):
             rhs = PolyF(rhs)
         nx = self.x * rhs.y
@@ -87,25 +91,25 @@ class PolyF:
         res = PolyF(nx, ny)
         return res
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         temp = self + other
         return temp
 
-    def __isub__(self, other):
+    def __isub__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         temp = self - other
         return temp
 
-    def __imul__(self, other):
+    def __imul__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         temp = self * other
         return temp
 
-    def __ifloordiv__(self, other):
+    def __ifloordiv__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         temp = self // other
@@ -115,31 +119,31 @@ class PolyF:
         return self.x.evaluate(1) // self.y.evaluate(1)
 
     # =
-    def __eq__(self, other):
+    def __eq__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         return self.x == other.x and self.y == other.y
 
     # <
-    def __lt__(self, other):
+    def __lt__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         return self.length() < other.length()
 
     # >
-    def __gt__(self, other):
+    def __gt__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         return other < self
 
     # >=
-    def __ge__(self, other):
+    def __ge__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         return not self < other
 
     # <=
-    def __le__(self, other):
+    def __le__(self, other: any):
         if not isinstance(other, PolyF):
             other = PolyF(other)
         return not other < self
