@@ -1,20 +1,29 @@
-from functools import cache
+from functools import lru_cache
 
-from C import Complex
-from F import Fraction
-from M import M
-from Mpro import Mpro
-from Poly import Poly
-from PolyF import PolyF
+# 导入自定义模块中的类和函数
+from C import Complex  # 复数类
+from F import Fraction  # 分数类
+from M import M  # 矩阵类
+from Mpro import Mpro  # 矩阵处理类
+from Poly import Poly  # 多项式类
+from PolyF import PolyF  # 带分数的多项式类
 
 
-@cache
+@lru_cache(maxsize=None)  # 使用LRU缓存，maxsize=None表示无限缓存
 def fact(n: int) -> int:
+    """
+    计算n的阶乘。
+    数学公式: n! = n * (n-1) * (n-2) * ... * 1
+    """
     return A(n, n)
 
 
-@cache
+@lru_cache(maxsize=None)
 def A(n: int, m: int) -> int:
+    """
+    计算排列数A(n, m)，即从n个元素中取出m个元素的排列数。
+    数学公式: A(n, m) = n! / (n-m)!
+    """
     if n == 0 or m == 0 or n == 1:
         return 1
     if m == 1:
@@ -25,8 +34,12 @@ def A(n: int, m: int) -> int:
     return v1 * v2
 
 
-@cache
+@lru_cache(maxsize=None)
 def C(n: int, m: int) -> int:
+    """
+    计算组合数C(n, m)，即从n个元素中取出m个元素的组合数。
+    数学公式: C(n, m) = n! / (m! * (n-m)!)
+    """
     if n == 0 or m == 0 or n == 1 or m == n:
         return 1
     if m == 1:
@@ -40,13 +53,21 @@ def C(n: int, m: int) -> int:
     return v1 * v3 // v2
 
 
-@cache
+@lru_cache(maxsize=None)
 def H(n: int) -> int:
+    """
+    计算卡特兰数H(n)。
+    数学公式: H(n) = C(2n, n) / (n + 1)
+    """
     return C(2 * n, n) // (n + 1)
 
 
-@cache
+@lru_cache(maxsize=None)
 def B(n: int) -> Fraction:
+    """
+    计算第n个伯努利数B(n)。
+    数学公式: B(n) = sum((-1)^i * C(n, i) * i^(n-1)) / (2^n - 1)
+    """
     res = Fraction()
     for i in range(0, n):
         for j in range(n - i):
@@ -61,14 +82,22 @@ def B(n: int) -> Fraction:
     return res
 
 
-@cache
+@lru_cache(maxsize=None)
 def Z(n: int) -> Fraction:
+    """
+    计算Z(n)，与伯努利数相关的函数。
+    数学公式: Z(n) = B(n+1) * (2^(n+1) - 1) / (n + 1)
+    """
     res = B(n + 1) * ((2 ** (n + 1)) - 1) // (n + 1)
     return res
 
 
-@cache
+@lru_cache(maxsize=None)
 def zeta1(n: int) -> Fraction:
+    """
+    计算黎曼ζ函数在负整数点的值。
+    数学公式: ζ(-n) = Z(n) / (1 - 2^(n+1))
+    """
     if n == 0:
         return Fraction(-1, 2)
     res = Z(n)
@@ -76,8 +105,12 @@ def zeta1(n: int) -> Fraction:
     return res
 
 
-@cache
+@lru_cache(maxsize=None)
 def zeta2(n: int) -> Fraction:
+    """
+    计算黎曼ζ函数在偶数点的值。
+    数学公式: ζ(2n) = (-1)^(n+1) * (2^(2n) * B(2n) * π^(2n)) / (2 * (2n)!)
+    """
     res = B(n)
     p1 = Fraction((-1) ** (n // 2 + 1))
     p2 = Fraction(2 ** n, 2 * fact(n))
@@ -85,8 +118,12 @@ def zeta2(n: int) -> Fraction:
     return res
 
 
-@cache
+@lru_cache(maxsize=None)
 def zeta3(x: int, n: int, j: int) -> Fraction:
+    """
+    计算zeta3函数，涉及组合数和幂运算。
+    数学公式: zeta3(x, n, j) = sum((-1)^k * C(n, k) * (x-k)^(n-j))
+    """
     if j < 1 or j > n:
         print("1 <= j <= n")
         return Fraction(-1)
@@ -99,8 +136,12 @@ def zeta3(x: int, n: int, j: int) -> Fraction:
     return res
 
 
-@cache
+@lru_cache(maxsize=None)
 def powsum(n: int) -> PolyF:
+    """
+    计算幂和多项式S(n)，即1^k + 2^k + ... + n^k的生成函数。
+    数学公式: S(n) = sum(k^i) for i in range(n+1)
+    """
     m = [[0 for _ in range(n + 1)] for _ in range(n + 1)]
     for i in range(0, n + 1):
         for j in range(i + 1):
@@ -118,8 +159,12 @@ def powsum(n: int) -> PolyF:
     return t[n][0]
 
 
-@cache
+@lru_cache(maxsize=None)
 def powmul(n: int) -> PolyF:
+    """
+    计算多项式的乘积展开式。
+    数学公式: T(n) = product((x + i) for i in range(1, n+1))
+    """
     if n == 0:
         return PolyF(1)
     a = [[PolyF() for _ in range(n)] for _ in range(n)]
@@ -140,8 +185,12 @@ def powmul(n: int) -> PolyF:
     return t[n - 1][0]
 
 
-@cache
+@lru_cache(maxsize=None)
 def zeta1mulc(n: int) -> Fraction:
+    """
+    计算与黎曼ζ函数相关的系数。
+    数学公式: T(n) = sum((-1)^j * C(n, j) * ζ(-j))
+    """
     a = [[Fraction() for _ in range(n)] for _ in range(n)]
     for i in range(n):
         for j in range(i + 1):
@@ -160,8 +209,12 @@ def zeta1mulc(n: int) -> Fraction:
     return t[n - 1][0]
 
 
-@cache
+@lru_cache(maxsize=None)
 def inv_zeta1mulc(n: int) -> Complex:
+    """
+    计算与黎曼ζ函数相关的逆系数。
+    数学公式: inv_T(n) = sum((-1)^j * C(n, j) * G(j))
+    """
     if n == 1:
         return G(1)
     a = [[Complex() for _ in range(n)] for _ in range(n)]
@@ -182,8 +235,12 @@ def inv_zeta1mulc(n: int) -> Complex:
     return t[n - 1][0]
 
 
-@cache
+@lru_cache(maxsize=None)
 def inv2_zeta1mulc(n: int):
+    """
+    计算与黎曼ζ函数相关的另一种逆系数。
+    数学公式: inv2_T(n) = sum((-1)^j * C(n, j) * T(j))
+    """
     if n == 1:
         return zeta1mulc(1)
     a = [[Complex() for _ in range(n)] for _ in range(n)]
@@ -204,8 +261,12 @@ def inv2_zeta1mulc(n: int):
     return t[n - 1][0]
 
 
-@cache
+@lru_cache(maxsize=None)
 def inv3_zeta1mulc(n: int):
+    """
+    计算与黎曼ζ函数相关的第三种逆系数。
+    数学公式: inv3_T(n) = sum((-1)^j * C(n, j) * unlimited2(powmul(j)))
+    """
     if n == 1:
         return unlimited2(powmul(1))
     a = [[Complex() for _ in range(n)] for _ in range(n)]
@@ -226,18 +287,30 @@ def inv3_zeta1mulc(n: int):
     return t[n - 1][0]
 
 
-@cache
+@lru_cache(maxsize=None)
 def G(n: int):
+    """
+    计算G(n)，与阶乘相关的复数函数。
+    数学公式: G(n) = 1 / (2n + 1)!
+    """
     return Complex(1) // fact(2 * n + 1)
 
 
-@cache
+@lru_cache(maxsize=None)
 def F(n: int) -> Fraction:
+    """
+    计算F(n)，与n相关的分数函数。
+    数学公式: F(n) = (-1)^n / (n + 1)
+    """
     return Fraction((-1) ** n, n + 1)
 
 
-@cache
+@lru_cache(maxsize=None)
 def unlimited(it: Poly) -> Complex:
+    """
+    计算多项式的极限值。
+    数学公式: lim(S(n)) = sum(F(i) * it[i])
+    """
     if it.degree() == 0:
         return it[0]
     arr = []
@@ -250,48 +323,78 @@ def unlimited(it: Poly) -> Complex:
 
 
 def unlimited2(it: PolyF) -> Complex:
-    return unlimited(it.x) // unlimited((it.y))
+    """
+    计算带分数的多项式的极限值。
+    数学公式: lim(S(n)) = unlimited(it.x) / unlimited(it.y)
+    """
+    return unlimited(it.x) // unlimited(it.y)
 
 
 if __name__ == '__main__':
+    # 打印前6个伯努利数
     for i in range(1, 7):
         print("第" + str(i) + "个伯努利数:", B(i))
     print()
+
+    # 打印黎曼ζ函数在负整数点的值
     for i in range(7):
         print("黎曼函数自变量(" + str(-i) + "):", zeta1(i))
     print()
+
+    # 打印黎曼ζ函数在偶数点的值
     for i in range(2, 10, 2):
         print("黎曼函数自变量(" + str(i) + "):", str(zeta2(i)) + " * (pi)^" + str(i))
     print()
+
     for i in range(7):
-        print("S(" + str(i) + "):", unlimited2(powsum(i)))
+        print("S(" + str(i) + "):", powsum(i))
     print()
+
+    for i in range(7):
+        print("n = 无穷大 -> S(" + str(i) + "):", unlimited2(powsum(i)))
+    print()
+
     for i in range(7):
         print("T(" + str(i) + "):", powmul(i))
     print()
+
     for i in range(7):
-        print("T(" + str(i) + "):", unlimited2(powmul(i)))
+        print("n = 无穷大 -> T(" + str(i) + "):", unlimited2(powmul(i)))
     print()
+
+    # 打印与黎曼ζ函数相关的系数T(n)
+    print(
+        "展开(x + 1)(x + 2) ... (x + n) -> [T(0) * x ^ n] + [T(1) * x ^ (n - 1)] + ... + [T(n) * x ^ 0] —> ")
     for i in range(1, 7):
-        print("黎曼函数系数T(" + str(-i) + "):", zeta1mulc(i))
+        print("G(" + str(-i) + "):", zeta1mulc(i))
     print()
+
     for i in range(1, 7):
-        print("黎曼函数自变量(" + str(i) + "):", inv_zeta1mulc(i))
+        print("G(" + str(2 * i) + "):", G(i))
     print()
+
+    # 打印与黎曼ζ函数相关的逆系数
     for i in range(1, 7):
-        print("黎曼函数2自变量(" + str(i) + "):", inv2_zeta1mulc(i))
+        print("反解G(" + str(i * 2) + "):", inv_zeta1mulc(i))
     print()
+
+    # 打印与黎曼ζ函数相关的第二种逆系数
     for i in range(1, 7):
-        print("黎曼函数3自变量(" + str(i) + "):", inv3_zeta1mulc(i))
+        print("反解G(" + str(-i) + "):", inv2_zeta1mulc(i))
     print()
+
+    # 打印与黎曼ζ函数相关的第三种逆系数
+    for i in range(1, 7):
+        print("n = 无穷大 -> 反解T(" + str(i) + "):", inv3_zeta1mulc(i))
+    print()
+
+    # 打印多项式展开式
     P = Poly(1)
-    for i in range(11):
+    for i in range(6):
         P *= Poly([i, 1])
     print(P)
     print()
-    for i in range(1, 7):
-        print("T(" + str(i) + "):", powmul(i).evaluate(10))
-    # for i in range(100, 107):
-    #     for j in range(100, 107):
-    #         for k in range(90, 97):
-    #             print(zeta3(i, j, k), end=' ')
+
+    # 打印多项式展开式的系数T(n)在x=5时的值
+    for i in range(1, 6):
+        print("T(" + str(i) + "):", powmul(i).evaluate(5))
